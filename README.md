@@ -1,46 +1,155 @@
-# Getting Started with Create React App
+# GitHub Repositories Explorer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React + TypeScript application to search GitHub users and explore their repositories.  
+Built as part of a coding test requirement.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- Search GitHub users by username (using GitHub REST API v3).
+- Shows up to **5 matching users**.
+- Click a user → see **all public repositories** of that user.
+- Error handling and loading states.
+- Responsive (mobile-friendly).
+- Supports **keyboard navigation** (press Enter to search).
+- Includes **unit and integration tests** with React Testing Library & Jest.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 📂 Project Structure
 
-### `npm test`
+```
+src/
+  components/
+    SearchBar.tsx
+    UserList.tsx
+    RepoList.tsx
+  types/
+    index.ts
+  App.tsx
+  index.tsx
+tests/
+  SearchBar.test.tsx
+  App.test.tsx
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🛠️ Tech Stack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **React 18**
+- **TypeScript**
+- **Jest** (for unit & integration tests)
+- **React Testing Library** (testing utilities)
+- **CSS (or your choice of styling)**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## ⚙️ Installation
 
-### `npm run eject`
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/<your-username>/github-repo-explorer.git
+   cd github-repo-explorer
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Start the development server:
+   ```bash
+   npm start
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+4. Open your browser:
+   ```
+   http://localhost:3000
+   ```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+---
 
-## Learn More
+## 🔍 Usage
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Type a GitHub username in the search bar.
+2. Press **Enter** or click **Search**.
+3. Up to 5 matching users will appear.
+4. Click a user to load their repositories.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
+
+## ✅ Testing
+
+We use **Jest + React Testing Library**.
+
+### Run all tests:
+```bash
+npm test
+```
+
+### Example Unit Test (SearchBar)
+```tsx
+it('calls onSearch when pressing Enter', () => {
+  const mockSearch = jest.fn();
+  render(<SearchBar onSearch={mockSearch} />);
+  const input = screen.getByRole('textbox', { name: /search github users/i });
+
+  fireEvent.change(input, { target: { value: 'octocat' } });
+  fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
+
+  expect(mockSearch).toHaveBeenCalledWith('octocat');
+});
+```
+
+### Example Integration Test (App)
+```tsx
+it('searches users and shows results', async () => {
+  (fetch as jest.Mock).mockResolvedValueOnce({
+    ok: true,
+    json: async () => ({
+      items: [{ login: 'octocat', id: 1, avatar_url: 'avatar.png', html_url: 'https://github.com/octocat' }]
+    }),
+  });
+
+  render(<App />);
+  const input = screen.getByRole('textbox', { name: /search github users/i });
+  fireEvent.change(input, { target: { value: 'octocat' } });
+  fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
+
+  expect(await screen.findByText(/octocat/)).toBeInTheDocument();
+});
+```
+
+---
+
+## 🌍 Deployment
+
+You can deploy easily to:
+
+- **Vercel**
+- **Netlify**
+- **GitHub Pages**
+
+Example (GitHub Pages):
+```bash
+npm run build
+npm install -g serve
+serve -s build
+```
+
+---
+
+## 🧩 Improvements (Future Work)
+
+- Add pagination for repositories.
+- Implement caching (React Query).
+- Add more filters (by language, stars).
+- Write more integration tests.
+
+---
+
+## 👨‍💻 Author
+
+Built by **Ridho Anugrah Putra** ✨
