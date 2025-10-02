@@ -42,7 +42,7 @@ tests/
 - **TypeScript**
 - **Jest** (for unit & integration tests)
 - **React Testing Library** (testing utilities)
-- **CSS (or your choice of styling)**
+- **CSS
 
 ---
 
@@ -123,14 +123,6 @@ it('searches users and shows results', async () => {
 ```
 
 ---
-
-## 🌍 Deployment
-
-You can deploy easily to:
-
-- **Vercel**
-- **Netlify**
-- **GitHub Pages**
 
 Example (GitHub Pages):
 ```bash
