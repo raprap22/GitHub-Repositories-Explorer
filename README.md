@@ -42,7 +42,7 @@ tests/
 - **TypeScript**
 - **Jest** (for unit & integration tests)
 - **React Testing Library** (testing utilities)
-- **CSS
+- **CSS**
 
 ---
 
@@ -124,7 +124,12 @@ it('searches users and shows results', async () => {
 
 ---
 
-Example (GitHub Pages):
+## 🌍 Deployment
+
+The app is deployed and publicly accessible at:  
+👉 **[Live Demo on Vercel](https://git-hub-repositories-explorer-five.vercel.app/)**
+
+Example (GitHub Pages local preview):
 ```bash
 npm run build
 npm install -g serve
